@@ -1,16 +1,10 @@
-name: "My CodeQL config"
+name: "My CodeQL Config"
+
+languages: python
 
 queries:
-  - uses: security-and-quality
+  - uses: security-and-quality  # This preset includes security extended suite
 
-paths:
-  - src
 paths-ignore:
-  - node_modules
-  - '**/*.test.py'
-
-query-filters:
-  - exclude:
-      problem.severity:
-        - warning
-        - recommendation
+  - '**/tests/**'  # Ignore test directories if you don't want them analyzed
+  - '**/migrations/**'

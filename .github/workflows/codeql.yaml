@@ -1,38 +1,30 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
-  schedule:
-    - cron: '24 2 * * 0'
+    branches: [ main ]  # or whatever your main branch is called
 
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'python' ]
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
+    # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v1
       with:
-        languages: ${{ matrix.language }}
-        config-file: ./codeql-config.yml
+        languages: python
+        config-file: ./.github/codeql/codeql-config.yml # Path to your config file
 
+    # Autobuild attempts to build any compiled languages (C/C++, C#, or Java).
+    # If this step fails, then you should remove it and run the build manually.
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v1
+
+    # Perform CodeQL Analysis
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
-      with:
-        category: "/language:${{matrix.language}}"
+      uses: github/codeql-action/analyze@v1
