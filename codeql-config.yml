@@ -1,17 +1,13 @@
-name: "Custom Python Security Analysis"
+name: "Custom Python Security Queries"
 
 queries:
-  - uses: ./sql_injection.ql
-  - uses: ./weak_hashing.ql
+  - uses: ./security-queries.qls  # Assuming you save your QL queries in this file
 
 paths:
-  - src
-
-paths-ignore:
-  - '**/test/**'
+  include:
+    - src/**/*.py
 
 query-filters:
   - exclude:
-      problem.severity:
-        - warning
-        - recommendation
+      id: 
+        - py/unused-local-variable
