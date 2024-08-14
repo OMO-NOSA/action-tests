@@ -1,34 +1,17 @@
-name: "Python Web App Security Analysis"
+name: "Custom Python Security Analysis"
 
 queries:
-  - uses: security-and-quality
-  - uses: ./custom-queries/python/sql-injection.ql
-  - uses: ./custom-queries/python/weak-cryptography.ql
-  - uses: ./custom-queries/python/sensitive-data-exposure.ql
-  - uses: ./custom-queries/python/insecure-direct-object-reference.ql
-  - uses: ./custom-queries/python/command-injection.ql
-  - uses: ./custom-queries/python/insecure-password-reset.ql
-  - uses: ./custom-queries/python/weak-password-policy.ql
-  - uses: ./custom-queries/python/debug-mode-enabled.ql
+  - uses: ./sql_injection.ql
+  - uses: ./weak_hashing.ql
 
 paths:
-  - app
+  - src
 
 paths-ignore:
-  - tests
-  - venv
+  - '**/test/**'
 
 query-filters:
-  - include:
-      tags:
-        - security
-        - correctness
-
   - exclude:
-      precision:
-        - low
-
-security-severity-filter: low
-
-output:
-  sarif-add-snippets: true
+      problem.severity:
+        - warning
+        - recommendation
