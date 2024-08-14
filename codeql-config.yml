@@ -1,0 +1,16 @@
+name: "My CodeQL config"
+
+queries:
+  - uses: security-and-quality
+
+paths:
+  - src
+paths-ignore:
+  - node_modules
+  - '**/*.test.py'
+
+query-filters:
+  - exclude:
+      problem.severity:
+        - warning
+        - recommendation
