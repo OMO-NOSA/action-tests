@@ -1,0 +1,21 @@
+name: "Test Pipeline"
+
+on:
+  workflow_dispatch:
+    inputs:
+      pipeline_id:
+        description: 'Pipeline ID'
+        required: true
+        type: string
+      environment:
+        description: 'Environment'
+        required: false
+        type: string
+        default: 'staging'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test step
+      run: echo "Hello World"
